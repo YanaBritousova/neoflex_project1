@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import time
 from airflow import DAG
 from airflow.operators.python import PythonOperator
@@ -22,8 +22,8 @@ def calculate_turnover_for_january(**context):
     status = 'SUCCESS'
     table_name = "dm.dm_account_turnover_f"
     
-    start_date = datetime(2018, 1, 1)
-    end_date = datetime(2018, 1, 31)
+    start_date = date(2018, 1, 1)
+    end_date = date(2018, 1, 31)
     current_date = start_date
 
     try:
@@ -31,7 +31,7 @@ def calculate_turnover_for_january(**context):
             date_str = current_date.strftime('%Y-%m-%d')
             logger.info(f"Расчет витрины за {date_str}")
             
-            sql = "CALL ds.fill_account_turnover_f(%s::timestamp)"
+            sql = "CALL ds.fill_account_turnover_f(%s)"
             pg_hook.run(sql, parameters=(current_date,))
             
             logger.info(f"Успешно рассчитано за {date_str}")
@@ -62,7 +62,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id='proc_dag',
+    dag_id='turnover_dag',
     default_args=default_args,
     schedule='@once',
     catchup=False,

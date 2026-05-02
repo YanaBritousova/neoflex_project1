@@ -1,4 +1,4 @@
-create or replace procedure ds.fill_account_turnover_f(i_OnDate timestamp) 
+create or replace procedure ds.fill_account_turnover_f(i_OnDate date) 
 language plpgsql as $$
 declare
 rate numeric;
