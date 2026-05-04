@@ -1,12 +1,10 @@
 from datetime import datetime, timedelta, date
-import time
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from psycopg2.extras import execute_values
 import pandas as pd
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 import logging
-import os
 
 logger = logging.getLogger(__name__)
 
@@ -28,12 +26,12 @@ def calculate_form101_for_january(**context):
     try:
         
         date_str = current_date.strftime('%Y-%m-%d')
-        logger.info(f"Расчет витрины за {date_str}")
+        logger.info(f"Расчет формы 101")
             
         sql = "CALL dm.fill_f101_round_f(%s)"
         pg_hook.run(sql, parameters=(current_date,))
             
-        logger.info(f"Успешно рассчитано за {date_str}")
+        logger.info(f"Успешно рассчитано")
         current_date += timedelta(days=1)
             
     except Exception as e:
