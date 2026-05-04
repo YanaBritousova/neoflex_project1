@@ -156,10 +156,11 @@ services:
     <<: *airflow-common
     command: scheduler
     volumes:
-      - ./data:/opt/airflow/data
-      - ./dags:/opt/airflow/dags
-      - ./logs:/opt/airflow/logs
-      - ./config:/opt/airflow/config
+      - ${HOST_DATA_PATH}:/opt/airflow/data
+      - ${HOST_DAGS_PATH}:/opt/airflow/dags
+      - ${HOST_EXPORTS_PATH}:/opt/airflow/exports
+      - ${HOST_LOGS_PATH}:/opt/airflow/logs
+      - ${HOST_CONFIG_PATH}:/opt/airflow/config
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
       interval: 30s
@@ -176,10 +177,11 @@ services:
     <<: *airflow-common
     command: dag-processor
     volumes:
-      - ./data:/opt/airflow/data
-      - ./dags:/opt/airflow/dags
-      - ./logs:/opt/airflow/logs
-      - ./config:/opt/airflow/config
+      - ${HOST_DATA_PATH}:/opt/airflow/data
+      - ${HOST_DAGS_PATH}:/opt/airflow/dags
+      - ${HOST_EXPORTS_PATH}:/opt/airflow/exports
+      - ${HOST_LOGS_PATH}:/opt/airflow/logs
+      - ${HOST_CONFIG_PATH}:/opt/airflow/config
     healthcheck:
       test: ["CMD-SHELL", 'airflow jobs check --job-type DagProcessorJob --hostname "$${HOSTNAME}"']
       interval: 30s
@@ -196,10 +198,11 @@ services:
     <<: *airflow-common
     command: celery worker
     volumes:
-      - ./data:/opt/airflow/data
-      - ./dags:/opt/airflow/dags
-      - ./logs:/opt/airflow/logs
-      - ./config:/opt/airflow/config
+      - ${HOST_DATA_PATH}:/opt/airflow/data
+      - ${HOST_DAGS_PATH}:/opt/airflow/dags
+      - ${HOST_EXPORTS_PATH}:/opt/airflow/exports
+      - ${HOST_LOGS_PATH}:/opt/airflow/logs
+      - ${HOST_CONFIG_PATH}:/opt/airflow/config
     healthcheck:
       # yamllint disable rule:line-length
       disable: true

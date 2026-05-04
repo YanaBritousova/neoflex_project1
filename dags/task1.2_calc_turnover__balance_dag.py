@@ -104,7 +104,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id='turnover_balance_dag',
+    dag_id='task1.2_calc_turnover__balance_dag',
     default_args=default_args,
     schedule='@once',
     catchup=False,

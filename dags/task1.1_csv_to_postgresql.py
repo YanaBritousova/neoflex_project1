@@ -156,7 +156,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id='csv_to_postgres_dag',
+    dag_id='task1.1_csv_to_postgresql_dag',
     default_args=default_args,
     description='Загрузка CSV в PostgreSQL',
     schedule='@once',
